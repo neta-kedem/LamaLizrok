@@ -4,14 +4,7 @@
         <a routerLink="/home" routerActive="active">Home</a> 
     </span>
     <ul class="nav navbar-nav">
-      <li><a routerLink="monster" routerActive="active">Meet the Monsters</a></li>
-      <li><a routerLink="monster/edit" routerActive="active">New Monster</a></li>
-      <li><a [routerLink]="[{outlets: {primary: 'home', aux: 'chat'}}]">Open Chat</a></li> 
-      <li><a [routerLink]="[{outlets: {aux: null}}]">Close Chat</a></li>
       <li><a routerLink="login" routerActive="active">login</a></li>
-
-
-
     </ul>
   </div>
 </nav>

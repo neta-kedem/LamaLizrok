@@ -48,6 +48,7 @@ export class LoginPageComponent implements OnInit {
 			this.router.navigate(['']);
 		}
 	}
+	
 	prepareForm(){
 		this.formLogin = this.formBuilder.group({
 	      username: ['',Validators.required],

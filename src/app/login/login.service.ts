@@ -12,12 +12,6 @@ export class UserModal {
 				public password: string
 	){}
 }
-export class GameModal {
-	
-	constructor(public name: string,
-				public _id: string
-	){}
-}
 
 @Injectable()
 export class LoginService {
