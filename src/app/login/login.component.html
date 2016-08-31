@@ -1,0 +1,28 @@
+<form (ngSubmit)="signIn(user.username, user.password)" [formGroup]="formLogin" novalidate>
+	<div class="form-group">
+		<label>Username</label>
+
+		<input type="text" class="form-control"
+			required formControlName="username" autofocus>
+			
+		<small *ngIf="formLogin.controls.username.dirty && formLogin.controls.username.errors?.required" class="text-danger">
+			Username is required.
+		</small>
+
+		<br>
+		<label>Password</label>
+		<input type="password" class="form-control"
+			required name="password" formControlName="password" >
+
+		<small *ngIf="formLogin.controls.password.dirty && formLogin.controls.password.errors?.required" class="text-danger">
+			password is required.
+		</small>
+	</div>
+
+	<!-- <button class="btn btn-primary" type="submit">Sign Up</button> -->
+	<button type="submit" [disabled]="!formLogin.valid"
+			class="btn btn-default">
+		Sign in
+	</button>
+
+</form>

@@ -1,0 +1,8 @@
+typings
+dist
+node_modules
+server/node_modules
+tmp
+desktop.ini
+.idea
+.vscode
