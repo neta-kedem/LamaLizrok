@@ -39,11 +39,13 @@ export class LoginPageComponent implements OnInit {
 	}
 
 	signUp(){
-		if(this.users.some((user)=>{return user.username === this.formLogin.value.username;})){
+		let value = this.formLogin.value;
+		if(this.users.some((user)=>{return user.username === value.username;})){
 			alert('username already exist');	
 		} else{
-			this.loginService.save(this.formLogin.value);
-			this.loginService.storeUsername(this.formLogin.value.username);
+			value.posts = [];
+			this.loginService.save(value);
+			this.loginService.storeUsername(value.username);
 			this.router.navigate(['']);
 		}
 	}

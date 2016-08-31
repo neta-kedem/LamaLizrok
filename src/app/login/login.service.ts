@@ -9,7 +9,8 @@ import * as io from 'socket.io-client';
 export class UserModal {
 	
 	constructor(public username: string,
-				public password: string
+				public password: string,
+				public posts: string[]
 	){}
 }
 
@@ -31,7 +32,7 @@ export class LoginService {
 		  .then(res => {
 		    const jsonUsers = res.json();
 		    return jsonUsers.map((jsonUser : any) => {
-		      return new UserModal(jsonUser.username, jsonUser.password);});
+		      return new UserModal(jsonUser.username, jsonUser.password, jsonUser.posts);});
 		  });
 
 		prmLogin.catch(err => {
@@ -53,7 +54,7 @@ export class LoginService {
 	    prmLogin = response.toPromise()
 	      .then((res : any) => {
 	          const jsonUser = res.json();
-			      return new UserModal(jsonUser.username, jsonUser.password);
+			      return new UserModal(jsonUser.username, jsonUser.password, jsonUser.posts);
 	      });
 
 	    prmLogin.catch(err => {
