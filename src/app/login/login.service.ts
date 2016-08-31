@@ -63,10 +63,10 @@ export class LoginService {
 	}
 
 	storeUsername(username){
-    	localStorage.setItem('DNDUsername', username);
+    	localStorage.setItem('LamaLiz_username', username);
   	}
 
   	logout(){
-    	localStorage.removeItem('DNDUsername');
+    	localStorage.removeItem('LamaLiz_username');
   	}
 }

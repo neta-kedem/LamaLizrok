@@ -28,27 +28,26 @@ export class LoginPageComponent implements OnInit {
 		});
 	}
 
-	public signIn(username, password) {
+	public signIn() {
 		console.log('LoginPageComponent: this.users:',this.users);
-		if(this.users.some((user)=>{return ((user.username === username)&&(user.password === password));})){
-			this.loginService.storeUsername(username);
+		if(this.users.some((user)=>{return ((user.username === this.formLogin.value.username)&&(user.password === this.formLogin.value.password));})){
+			this.loginService.storeUsername(this.formLogin.value.username);
 			this.router.navigate(['']);	
 		} else {
 			alert('wrong username or password');
-			this.user.password = '';
 		}
 	}
 
-	signUp(username, password){
-		if(this.users.some((user)=>{return user.username === username;})){
+	signUp(){
+		if(this.users.some((user)=>{return user.username === this.formLogin.value.username;})){
 			alert('username already exist');	
 		} else{
-			this.loginService.save({username:username, password:password});
-			this.loginService.storeUsername(username);
+			this.loginService.save(this.formLogin.value);
+			this.loginService.storeUsername(this.formLogin.value.username);
 			this.router.navigate(['']);
 		}
 	}
-	
+
 	prepareForm(){
 		this.formLogin = this.formBuilder.group({
 	      username: ['',Validators.required],

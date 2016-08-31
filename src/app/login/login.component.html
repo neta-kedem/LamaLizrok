@@ -1,4 +1,4 @@
-<form (ngSubmit)="signIn(user.username, user.password)" [formGroup]="formLogin" novalidate>
+<form (ngSubmit)="signIn()" [formGroup]="formLogin" novalidate>
 	<div class="form-group">
 		<label>Username</label>
 
@@ -19,10 +19,14 @@
 		</small>
 	</div>
 
+
+
 	<!-- <button class="btn btn-primary" type="submit">Sign Up</button> -->
 	<button type="submit" [disabled]="!formLogin.valid"
-			class="btn btn-default">
+			class="btn btn-primary">
 		Sign in
 	</button>
+
+	<input [disabled]="!formLogin.valid" type="button" value="SignUp" class="btn btn-default" (click)=signUp()>
 
 </form>

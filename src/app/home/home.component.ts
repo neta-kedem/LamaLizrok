@@ -13,3 +13,22 @@ export class HomeComponent implements OnInit {
     ngOnInit() { }
 
 }
+
+
+/*
+Users = {
+				name: string
+				password: string
+				posts: postId[]
+				_id: mongoId
+			}
+
+Items = {
+				pictures: []
+				tags: string[]
+				_id: mongoId
+				location: geoLocation
+				description: string
+				addingTime: number
+			}
+*/
