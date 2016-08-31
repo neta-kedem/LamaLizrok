@@ -8,13 +8,15 @@ import { HttpModule } from '@angular/http';
 import { AppComponent }  from './app.component';
 import { HomeComponent }  from './home/home.component';
 import { LoginPageComponent } from './login/login.component';
+import { AddItemComponent } from './add-item/add-item.component';
+
 
 import { routing } from './app.routes';
 
 
 @NgModule({
   imports: [ BrowserModule, ReactiveFormsModule, HttpModule, routing],       // module dependencies
-  declarations: [ AppComponent, HomeComponent, LoginPageComponent],   // components and directives
+  declarations: [ AppComponent, HomeComponent, LoginPageComponent, AddItemComponent],   // components and directives
   bootstrap: [ AppComponent ],     // root component
   providers: [ ]                    // services
 })
