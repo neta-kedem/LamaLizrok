@@ -6,4 +6,5 @@ tmp
 desktop.ini
 .idea
 .vscode
-server/uploads/*.*
+server/uploads/*
+!server/uploads/keep
