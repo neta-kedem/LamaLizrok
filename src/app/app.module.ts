@@ -10,6 +10,9 @@ import { HomeComponent }  from './home/home.component';
 import { LoginPageComponent } from './login/login.component';
 import { AddItemComponent } from './add-item/add-item.component';
 
+import { AddItemService } from './add-item/add-item.service';
+
+
 
 import { routing } from './app.routes';
 
@@ -18,7 +21,7 @@ import { routing } from './app.routes';
   imports: [ BrowserModule, ReactiveFormsModule, HttpModule, routing],       // module dependencies
   declarations: [ AppComponent, HomeComponent, LoginPageComponent, AddItemComponent],   // components and directives
   bootstrap: [ AppComponent ],     // root component
-  providers: [ ]                    // services
+  providers: [ AddItemService ]                    // services
 })
 export class AppModule { }
 
