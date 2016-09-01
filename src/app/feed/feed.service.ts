@@ -6,10 +6,10 @@ import {Observable, Subject} from 'rxjs/Rx';
 import * as io from 'socket.io-client';
 
 
-export class Item {
+export class ItemModal {
 	
 	constructor(
-				public pictures: string[],
+				public photos: string[],
 				public tags: string[],
 				public location: {},
 				public description: string,
@@ -28,14 +28,14 @@ export class LoginService {
 	}
 
 	// query (GETs a list)
-	query(): Promise<UserModal[]> {
+	query(): Promise<ItemModal[]> {
 
 		let prmLogin = this.http.get(this.baseUrl)
 		  .toPromise()
 		  .then(res => {
 		    const jsonUsers = res.json();
 		    return jsonUsers.map((jsonUser : any) => {
-		      return new UserModal(jsonUser.username, jsonUser.password);});
+		      return new ItemModal(jsonUser.photos, jsonUser.tags);});
 		  });
 
 		prmLogin.catch(err => {
@@ -46,10 +46,10 @@ export class LoginService {
 	}
 
 	// POST (add) a new username
-	save(user: any) : Promise<UserModal>{
+	save(user: any) : Promise<ItemModal>{
 
 	    let response : any;
-	    let prmLogin : Promise<UserModal>;
+	    let prmLogin : Promise<ItemModal>;
 
 	    const url = this.baseUrl;
 	   	response = this.http.post(url, user);
@@ -57,7 +57,7 @@ export class LoginService {
 	    prmLogin = response.toPromise()
 	      .then((res : any) => {
 	          const jsonUser = res.json();
-			      return new UserModal(jsonUser.username, jsonUser.password);
+			      return new ItemModal(jsonUser.username, jsonUser.password);
 	      });
 
 	    prmLogin.catch(err => {

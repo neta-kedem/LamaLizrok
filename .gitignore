@@ -6,3 +6,4 @@ tmp
 desktop.ini
 .idea
 .vscode
+server/uploads/*

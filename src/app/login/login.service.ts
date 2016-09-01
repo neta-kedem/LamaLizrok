@@ -10,7 +10,7 @@ export class UserModal {
 	
 	constructor(public username: string,
 				public password: string,
-				public posts: string[]
+				public points: number
 	){}
 }
 
