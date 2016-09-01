@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-export class itemModel {
+export class ItemModel {
 	constructor (public imgUrl:string, private _id: string){}
 }
 
@@ -11,7 +11,7 @@ export class itemModel {
 export class HomeService {
 
 
-  private baseUrl = 'http://localhost:3003/data/kid/';
+  private baseUrl = 'http://localhost:3003/data/item';
   constructor(private http: Http) {}
 
 
@@ -20,15 +20,15 @@ export class HomeService {
   }
 
   // query (GETs a list)
-  query(): Promise<itemModel[]> {
+  query(): Promise<ItemModel[]> {
 
     let prmItem = this.http.get(this.baseUrl)
       .toPromise()
       .then(res => {
-        const jsonKids = res.json();
-        return jsonKids.map((jsonKid : any) => {
-          let jsonKidContacts = JSON.parse(jsonKid.contacts);
-          return new itemModel(jsonKid.name, jsonKid.birthdate);
+        const jsonItems = res.json();
+        return jsonItems.map((jsonItem : any) => {
+          let jsonItemContacts = JSON.parse(jsonItem.contacts);
+          return new ItemModel(jsonItem.name, jsonItem.birthdate);
           });
       });
 
@@ -40,40 +40,40 @@ export class HomeService {
   }
 
   // get (GETs a single)
-  get(id: string) : Promise<itemModel> {
-    let prmKid = this.http.get(this.baseUrl + id)
+  get(id: string) : Promise<ItemModel> {
+    let prmItem = this.http.get(this.baseUrl + id)
       .toPromise()
       .then(res => {
-        const jsonKid = res.json();
-        let jsonKidContacts = JSON.parse(jsonKid.contacts);
-        return new itemModel(jsonKid.name, jsonKid.birthdate);
+        const jsonItem = res.json();
+        let jsonItemContacts = JSON.parse(jsonItem.contacts);
+        return new ItemModel(jsonItem.name, jsonItem.birthdate);
       });
 
-    prmKid.catch(err => {
+    prmItem.catch(err => {
       console.log('HomeService::get - Problem talking to server');
     });
-    return prmKid;
+    return prmItem;
 
   }
 
   // DELETE 
-  remove(id: string) : Promise<itemModel[]> {
-    let prmKid = this.http.delete(this.baseUrl + id)
+  remove(id: string) : Promise<ItemModel[]> {
+    let prmItem = this.http.delete(this.baseUrl + id)
       .toPromise()
       .then(res => {
         return this.query();
       });
 
-    prmKid.catch(err => {
-      console.log('KidService::remove - Problem talking to server', err);
+    prmItem.catch(err => {
+      console.log('HomeService::remove - Problem talking to server', err);
     });
-    return prmKid;
+    return prmItem;
   }
 
   // save - Adds (POST) or update (PUT)  
-  save(itemData: any, id?: string) : Promise<itemModel>{
+  save(itemData: any, id?: string) : Promise<ItemModel>{
     let response : any;
-    let prmKid : Promise<itemModel>;
+    let prmItem : Promise<ItemModel>;
 
     if (id) {
       const url = this.baseUrl + id;
@@ -83,15 +83,15 @@ export class HomeService {
        response = this.http.post(url, itemData);
     }
 
-    prmKid = response.toPromise()
+    prmItem = response.toPromise()
       .then((res : any) => {
-          const jsonKid = res.json();
-          return new itemModel(jsonKid.name, jsonKid.birthdate);
+          const jsonItem = res.json();
+          return new ItemModel(jsonItem.name, jsonItem.birthdate);
       });
 
-    prmKid.catch(err => {
-      console.log('KidService::save - Problem talking to server', err);
+    prmItem.catch(err => {
+      console.log('HomeService::save - Problem talking to server', err);
     });
-    return prmKid;
+    return prmItem;
   }
 }

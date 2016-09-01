@@ -1,16 +1,11 @@
-// Minimal Simple REST API Handler (With MongoDB and Socket.io)
-// Plus support for simple login and session
-// Plus support for file upload
-// Author: Yaron Biton misterBIT.co.il
-
 "use strict";
-const 	express = require('express'),
+const 	express 		= require('express'),
 		bodyParser 		= require('body-parser'),
-		cors = require('cors'),
-		mongodb = require('mongodb')
+		cors 			= require('cors'),
+		mongodb 		= require('mongodb');
 
-const clientSessions = require("client-sessions");
-const multer  = require('multer')
+const clientSessions 	= require("client-sessions");
+const multer  			= require('multer');
 
 // Configure where uploaded files are going
 const uploadFolder = '/uploads';
@@ -24,10 +19,10 @@ var storage = multer.diskStorage({
 		
 
         const ext = file.originalname.substr(file.originalname.lastIndexOf('.'));
-        cb(null, file.fieldname + '-' + Date.now() + ext)
+        cb(null, file.fieldname + '-' + Date.now() + ext);
   }
 })
-var upload = multer({ storage: storage })
+var upload = multer({ storage: storage });
 	
 const app = express();
 
@@ -65,7 +60,7 @@ function dbConnect() {
 				reject(err);
 			}
 			else {
-				//cl("Connected to DB");
+				cl("Connected to DB");
 				resolve(db);
 			}
 		});
@@ -102,7 +97,7 @@ app.get('/data/:objType/:id', function (req, res) {
 		collection.findOne({_id: new mongodb.ObjectID(objId)}, (err, obj) => {
 			if (err) {
 				cl('Cannot get you that ', err)
-				res.json(404, { error: 'not found' })
+				res.json(404, { error: 'not found' });
 			} else {
 				cl("Returning a single"+ objType);
 				res.json(obj);
@@ -121,8 +116,8 @@ app.delete('/data/:objType/:id', function (req, res) {
 		const collection = db.collection(objType);
 		collection.deleteOne({ _id:  new mongodb.ObjectID(objId)}, (err, result) => {
 			if (err) {
-				cl('Cannot Delete', err)
-				res.json(500, { error: 'Delete failed' })
+				cl('Cannot Delete', err);
+				res.json(500, { error: 'Delete failed' });
 			} else {
 				cl("Deleted", result);
 				res.json({});
@@ -154,7 +149,7 @@ app.post('/data/:objType', upload.single('file'), function (req, res) {
 		collection.insert(obj, (err, result) => {
 			if (err) {
 				cl(`Couldnt insert a new ${objType}`, err)
-				res.json(500, { error: 'Failed to add' })
+				res.json(500, { error: 'Failed to add' });
 			} else {
 				cl(objType + " added");
                 res.json(obj);
@@ -178,8 +173,8 @@ app.put('/data/:objType/:id', function (req, res) {
 		collection.updateOne({ _id:  new mongodb.ObjectID(objId)}, newObj,
 		 (err, result) => {
 			if (err) {
-				cl('Cannot Update', err)
-				res.json(500, { error: 'Update failed' })
+				cl('Cannot Update', err);
+				res.json(500, { error: 'Update failed' });
 			} else {
 				//cl("Updated", result);
 				res.json(newObj);

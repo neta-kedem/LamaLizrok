@@ -35,7 +35,7 @@ export class AddItemComponent implements OnInit {
         ngOnInit() { 
                 
                 this.itemList = this.addItemService.items;
-                console.log(this.itemList)
+                console.log(this.itemList);
                 setTimeout(() => {}, 2000);
                 const navi = <any>navigator;
 
@@ -55,18 +55,18 @@ export class AddItemComponent implements OnInit {
         }
         findPosition (navi) {            
                 if (navi.geolocation) {
-                        console.log('ENTERING getLocation')                        
+                        console.log('ENTERING getLocation');
                         navi.geolocation.getCurrentPosition(this.showPosition);
                 } else {
-                        console.log('NOT')    
+                        console.log('NOT');
                 }
         }
         showPosition(position) {
-                console.log(position)
+                console.log(position);
         }
 
         takePicture () {                 
-                this.context.drawImage(this.video, 0, 0, 640, 480)
+                this.context.drawImage(this.video, 0, 0, 640, 480);
         }
 }
 
