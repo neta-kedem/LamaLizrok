@@ -10,14 +10,21 @@ import {AddItemService} from './add-item.service';
     // moduleId: module.id,
     selector: 'add-item',
     styles: ['app.component.scss'],
-    template: `<h1>Add item</h1>
-                <!--<h4>{{}}</h4>-->
-                <button (click)="takePicture()">take a picture</button>
-                <video #myVideo width="320" height="240" [src]="videosrc"></video>
-                <canvas #myCanvas width="320" height="240" style="background:lightgray;"></canvas>
-                <select name="itemsList">
-                        <option *ngFor="let item of itemList">{{item}}</option>
-                </select>
+    template: `<section class="add_item_component">
+                        <h1>Add item</h1>
+                        <div class="video_box">
+                                <video #myVideo [src]="videosrc"></video>
+                                <div class="video_overlays">   
+                                        <button (click)="takePicture()"></button>
+                                </div>
+                        </div>                              
+                        <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
+                        <select name="itemsList">
+                                <option *ngFor="let item of itemList">{{item}}</option>
+                        </select>
+
+                        <button (click)="save()">Save</button>
+                </section>                
                  `
 })
 export class AddItemComponent implements OnInit {
@@ -26,6 +33,7 @@ export class AddItemComponent implements OnInit {
         @ViewChild("myCanvas") myCanvas;
         @ViewChild("myVideo") myVideo;
         video: any;        
+        canvas;
         context:CanvasRenderingContext2D;
         itemList;
 
@@ -47,8 +55,8 @@ export class AddItemComponent implements OnInit {
                     this.videosrc = this.sanitizer.bypassSecurityTrustUrl(videosrc);
                 }, (err) => console.log(err));
 
-                let canvas = this.myCanvas.nativeElement;
-                this.context = canvas.getContext("2d");
+                this.canvas = this.myCanvas.nativeElement;
+                this.context = this.canvas.getContext("2d");
 
                 let video =this.myVideo.nativeElement;                
                 this.video = video;
@@ -67,6 +75,10 @@ export class AddItemComponent implements OnInit {
 
         takePicture () {                 
                 this.context.drawImage(this.video, 0, 0, 640, 480);
+        }
+        save () {
+                var dataURL = this.canvas.toDataURL("image/png");
+                console.log('dataURL', dataURL)
         }
 }
 
