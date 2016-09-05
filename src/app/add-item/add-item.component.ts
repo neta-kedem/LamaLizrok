@@ -49,6 +49,7 @@ export class AddItemComponent implements OnInit {
 
                 this.findPosition(navi);
 
+                // navi.mediaDevices.getUserMedia = navi.mediaDevices.getUserMedia || navi.mediaDevices.mozGetUserMedia || navi.mediaDevices.webkitGetUserMedia;                
                 navi.getUserMedia = navi.getUserMedia || navi.mozGetUserMedia || navi.webkitGetUserMedia;
                 navi.getUserMedia({video: true},(stream) => {
                     let videosrc= URL.createObjectURL(stream);
@@ -74,7 +75,7 @@ export class AddItemComponent implements OnInit {
         }
 
         takePicture () {                 
-                this.context.drawImage(this.video, 0, 0, 640, 480);
+                this.context.drawImage(this.video, 0, 0, 320, 240);
         }
         save () {
                 var dataURL = this.canvas.toDataURL("image/png");
