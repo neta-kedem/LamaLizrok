@@ -19,16 +19,10 @@ import {AddItemService} from './add-item.service';
                                 </div>
                         </div>                              
                         <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
-                        
-                        <label>Description:</label>
-                        <textarea rows="4" cols="50"> </textarea>
-                        
-                        <select #selectedTag name="itemsList" (change)="addTag(selectedTag.value)">
-                                <option *ngFor="let item of itemList">{{item}}</option>
+                        <select name="itemsList" [(ngModel)]="tag">
+                                <option  *ngFor="let item of itemList">{{item}}</option>
                         </select>
-                        <div>
-                                <span *ngFor="let tag of selectedTags">{{ tag }}</span>
-                        </div>
+                        <textarea name="description" id="description" ngDefaultControl [(ngModel)]="description" cols="30" rows="10"></textarea>
 
                         <button (click)="save()">Save</button>
                 </section>                
@@ -44,9 +38,14 @@ export class AddItemComponent implements OnInit {
         context:CanvasRenderingContext2D;
         itemList;
         private selectedTags = [];
+        dataimg: string;
+        tag;
+        position;
+        addingTime;
+        description;
 
         constructor(private sanitizer:DomSanitizationService,
-                        private addItemService: AddItemService){}
+                    private addItemService: AddItemService){}
 
         ngOnInit() { 
                 
@@ -54,13 +53,11 @@ export class AddItemComponent implements OnInit {
                 console.log(this.itemList);
                 setTimeout(() => {}, 2000);
                 const navi = <any>navigator;
-
-                this.findPosition(navi);
-
+                
                 // navi.mediaDevices.getUserMedia = navi.mediaDevices.getUserMedia || navi.mediaDevices.mozGetUserMedia || navi.mediaDevices.webkitGetUserMedia;                
                 navi.getUserMedia = navi.getUserMedia || navi.mozGetUserMedia || navi.webkitGetUserMedia;
                 navi.getUserMedia({video: true},(stream) => {
-                    let videosrc= URL.createObjectURL(stream);
+                    let videosrc = URL.createObjectURL(stream);
                     this.videosrc = this.sanitizer.bypassSecurityTrustUrl(videosrc);
                 }, (err) => console.log(err));
 
@@ -70,29 +67,36 @@ export class AddItemComponent implements OnInit {
                 let video =this.myVideo.nativeElement;                
                 this.video = video;
         }
-        findPosition (navi) {            
+
+        findPosition(navi) {
                 if (navi.geolocation) {
                         console.log('ENTERING getLocation');
-                        navi.geolocation.getCurrentPosition(this.showPosition);
+                        navi.geolocation.getCurrentPosition((pos)=>{
+                                this.position = {longitude:pos.coords.longitude, latitude:pos.coords.latitude};
+                                this.addingTime = pos.timestamp;
+                        });
                 } else {
                         console.log('NOT');
                 }
         }
-        showPosition(position) {
-                console.log(position);
-        }
 
         takePicture () {                 
                 this.context.drawImage(this.video, 0, 0, 320, 240);
+                this.context.drawImage(this.video, 0, 0, 640, 480);
+                this.dataimg = this.canvas.toDataURL("image/png");
+                const navi = <any>navigator;
+                this.findPosition(navi);
         }
         addTag(tag) {
                 this.selectedTags.push(tag);
+
         }
+
         save () {
-                var dataURL = this.canvas.toDataURL("image/png");
-                console.log('dataURL', dataURL)
+                this.addItemService.save({      photo:this.dataimg,
+                                                tags:this.tag,
+                                                position: this.position,
+                                                addingTime: this.addingTime,
+                                                description: this.description});
         }
 }
-
-
-// context.drawImage(video, 0, 0, 640, 480);
