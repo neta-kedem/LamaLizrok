@@ -19,9 +19,10 @@ import {AddItemService} from './add-item.service';
                                 </div>
                         </div>                              
                         <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
-                        <select name="itemsList">
-                                <option *ngFor="let item of itemList">{{item}}</option>
+                        <select name="itemsList" [(ngModel)]="tag">
+                                <option  *ngFor="let item of itemList">{{item}}</option>
                         </select>
+                        <textarea name="description" id="description" ngDefaultControl [(ngModel)]="description" cols="30" rows="10"></textarea>
 
                         <button (click)="save()">Save</button>
                 </section>                
@@ -37,9 +38,13 @@ export class AddItemComponent implements OnInit {
         context:CanvasRenderingContext2D;
         itemList;
         dataimg: string;
+        tag;
+        position;
+        addingTime;
+        description;
 
         constructor(private sanitizer:DomSanitizationService,
-                        private addItemService: AddItemService){}
+                    private addItemService: AddItemService){}
 
         ngOnInit() { 
                 
@@ -48,11 +53,9 @@ export class AddItemComponent implements OnInit {
                 setTimeout(() => {}, 2000);
                 const navi = <any>navigator;
 
-                this.findPosition(navi);
-
                 navi.getUserMedia = navi.getUserMedia || navi.mozGetUserMedia || navi.webkitGetUserMedia;
                 navi.getUserMedia({video: true},(stream) => {
-                    let videosrc= URL.createObjectURL(stream);
+                    let videosrc = URL.createObjectURL(stream);
                     this.videosrc = this.sanitizer.bypassSecurityTrustUrl(videosrc);
                 }, (err) => console.log(err));
 
@@ -62,25 +65,33 @@ export class AddItemComponent implements OnInit {
                 let video =this.myVideo.nativeElement;                
                 this.video = video;
         }
-        findPosition (navi) {            
+
+        findPosition(navi) {
                 if (navi.geolocation) {
                         console.log('ENTERING getLocation');
-                        navi.geolocation.getCurrentPosition(this.showPosition);
+                        navi.geolocation.getCurrentPosition((pos)=>{
+                                this.position = {longitude:pos.coords.longitude, latitude:pos.coords.latitude};
+                                this.addingTime = pos.timestamp;
+                        });
                 } else {
                         console.log('NOT');
                 }
-        }
-        showPosition(position) {
-                console.log(position);
         }
 
         takePicture () {                 
                 this.context.drawImage(this.video, 0, 0, 640, 480);
                 this.dataimg = this.canvas.toDataURL("image/png");
+
+                const navi = <any>navigator;
+                navi.getUserMedia = navi.getUserMedia || navi.mozGetUserMedia || navi.webkitGetUserMedia;
+                this.findPosition(navi);
         }
 
         save () {
-                console.log(this.dataimg);
-                this.addItemService.save(this.dataimg);
+                this.addItemService.save({      photo:this.dataimg,
+                                                tags:this.tag,
+                                                position: this.position,
+                                                addingTime: this.addingTime,
+                                                description: this.description});
         }
 }

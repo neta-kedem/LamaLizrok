@@ -3,7 +3,22 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 export class ItemModel {
-        constructor (public imgUrl:string, private _id: string){}
+/*
+    constructor(
+        public photos: string[],
+        public tags: string[],
+        public location: {},
+        public description: string,
+        public addingTime: number
+    ){}*/
+    constructor(
+        public photo: string,
+        public tag: string,
+        public position: {},
+        public addingTime: number,
+        public description: string
+    ){}
+
 }
 
 @Injectable()
@@ -23,7 +38,7 @@ export class AddItemService {
                             const jsonItems = res.json();
                             return jsonItems.map((jsonItem : any) => {
                                     console.log('query service', jsonItem);
-                                    return new ItemModel(jsonItem.name, jsonItem._id);
+                                    return new ItemModel(jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
                             });
                     });
 
@@ -41,7 +56,7 @@ export class AddItemService {
                     .then(res => {
                             const jsonItem = res.json();
                             let jsonItemContacts = JSON.parse(jsonItem.contacts);
-                            return new ItemModel(jsonItem.name, jsonItem.birthdate);
+                            return new ItemModel(jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
                     });
 
                 prmItem.catch(err => {
@@ -83,7 +98,7 @@ export class AddItemService {
                     .then((res : any) => {
                             const jsonItem = JSON.parse(res._body);
                             console.log('jsonItem',jsonItem);
-                            return new ItemModel(jsonItem.body, jsonItem._id);
+                            return new ItemModel(jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
                     });
 
                 prmItem.catch(err => {
