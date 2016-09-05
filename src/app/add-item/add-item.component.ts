@@ -19,9 +19,16 @@ import {AddItemService} from './add-item.service';
                                 </div>
                         </div>                              
                         <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
-                        <select name="itemsList">
+                        
+                        <label>Description:</label>
+                        <textarea rows="4" cols="50"> </textarea>
+                        
+                        <select #selectedTag name="itemsList" (change)="addTag(selectedTag.value)">
                                 <option *ngFor="let item of itemList">{{item}}</option>
                         </select>
+                        <div>
+                                <span *ngFor="let tag of selectedTags">{{ tag }}</span>
+                        </div>
 
                         <button (click)="save()">Save</button>
                 </section>                
@@ -36,6 +43,7 @@ export class AddItemComponent implements OnInit {
         canvas;
         context:CanvasRenderingContext2D;
         itemList;
+        private selectedTags = [];
 
         constructor(private sanitizer:DomSanitizationService,
                         private addItemService: AddItemService){}
@@ -76,6 +84,9 @@ export class AddItemComponent implements OnInit {
 
         takePicture () {                 
                 this.context.drawImage(this.video, 0, 0, 320, 240);
+        }
+        addTag(tag) {
+                this.selectedTags.push(tag);
         }
         save () {
                 var dataURL = this.canvas.toDataURL("image/png");

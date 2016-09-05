@@ -69,8 +69,10 @@ function dbConnect() {
 
 // GETs a list
 app.get('/data/:objType', function (req, res) {
+	cl('ENTERING GET')	
 	const objType = req.params.objType;
 	dbConnect().then((db) => {
+		cl('objType', objType)		
 		const collection = db.collection(objType);
 		console.log('objType', objType);		
 		

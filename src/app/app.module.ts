@@ -9,8 +9,12 @@ import { AppComponent }  from './app.component';
 import { HomeComponent }  from './home/home.component';
 import { LoginPageComponent } from './login/login.component';
 import { AddItemComponent } from './add-item/add-item.component';
+import { FeedComponent } from './items-feed/feed.component';
+
 
 import { AddItemService } from './add-item/add-item.service';
+import { FeedService } from './items-feed/feed.service';
+
 
 
 
@@ -19,9 +23,9 @@ import { routing } from './app.routes';
 
 @NgModule({
   imports: [ BrowserModule, ReactiveFormsModule, HttpModule, routing],       // module dependencies
-  declarations: [ AppComponent, HomeComponent, LoginPageComponent, AddItemComponent],   // components and directives
+  declarations: [ AppComponent, HomeComponent, LoginPageComponent, AddItemComponent, FeedComponent],   // components and directives
   bootstrap: [ AppComponent ],     // root component
-  providers: [ AddItemService ]                    // services
+  providers: [ AddItemService, FeedService ]                    // services
 })
 export class AppModule { }
 
