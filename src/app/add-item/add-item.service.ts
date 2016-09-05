@@ -70,14 +70,12 @@ export class AddItemService {
 
                 let response : any;
                 let prmItem : Promise<ItemModel>;
-                // console.log('save service', itemData);
                 if(id) {
                         const url = this.baseUrl + id;
                         response = this.http.put(url, itemData);
                 } else {
                         const url = this.baseUrl;
                         response = this.http.post(url, {body:itemData});
-                        // console.log('blaaa',itemData.toString());
                 }
 
                 prmItem = response

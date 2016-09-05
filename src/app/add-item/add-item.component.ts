@@ -36,6 +36,7 @@ export class AddItemComponent implements OnInit {
         canvas;
         context:CanvasRenderingContext2D;
         itemList;
+        dataimg: string;
 
         constructor(private sanitizer:DomSanitizationService,
                         private addItemService: AddItemService){}
@@ -75,13 +76,11 @@ export class AddItemComponent implements OnInit {
 
         takePicture () {                 
                 this.context.drawImage(this.video, 0, 0, 640, 480);
+                this.dataimg = this.canvas.toDataURL("image/png");
         }
+
         save () {
-                let dataURL = this.canvas.toDataURL("image/png");
-                console.log('save component', dataURL);
-                this.addItemService.save(dataURL);
-                    // .then((item) => {
-                    //         console.log('saved', item);
-                    // });
+                console.log(this.dataimg);
+                this.addItemService.save(this.dataimg);
         }
 }
