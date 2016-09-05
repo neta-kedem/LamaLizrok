@@ -77,10 +77,11 @@ export class AddItemComponent implements OnInit {
                 this.context.drawImage(this.video, 0, 0, 640, 480);
         }
         save () {
-                var dataURL = this.canvas.toDataURL("image/png");
-                console.log('dataURL', dataURL)
+                let dataURL = this.canvas.toDataURL("image/png");
+                console.log('save component', dataURL);
+                this.addItemService.save(dataURL);
+                    // .then((item) => {
+                    //         console.log('saved', item);
+                    // });
         }
 }
-
-
-// context.drawImage(video, 0, 0, 640, 480);
