@@ -4,8 +4,6 @@ import {Location} from '@angular/common';
 import {DomSanitizationService} from '@angular/platform-browser';
 import {AddItemService} from './add-item.service';
 
-
-
 @Component({
     // moduleId: module.id,
     selector: 'add-item',
@@ -17,15 +15,26 @@ import {AddItemService} from './add-item.service';
                                 <div class="video_overlays">   
                                         <button (click)="takePicture()"></button>
                                 </div>
-                        </div>                              
+                        </div>
                         <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
-                        <select name="itemsList" [(ngModel)]="tag">
-                                <option  *ngFor="let item of itemList">{{item}}</option>
-                        </select>
+                        <!--<div class="container" >-->
+                            <!--<div class="input-field col s12">-->
+                              <label for="tagsList">Choose Tags:</label>
+                              <input id="tagsList" type="text" class="validate filter-input" [(ngModel)]=currTag (keyup)=filter()>
+                            <!--</div>-->
+                            <div class="suggestions" *ngIf="filteredList.length > 0">
+                                <ul *ngFor=" let itemList of filteredList" >
+                                    <li >
+                                        <a (click)="selectTag(itemList)">{{itemList}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        <!--</div>-->
+                        <div><span *ngFor="let country of chosenTags" (click)="removeElement(country)">{{country}} </span></div>
+                        
                         <textarea name="description" id="description" ngDefaultControl [(ngModel)]="description" cols="30" rows="10"></textarea>
-
                         <button (click)="save()">Save</button>
-                </section>                
+                </section>
                  `
 })
 export class AddItemComponent implements OnInit {
@@ -37,20 +46,21 @@ export class AddItemComponent implements OnInit {
         canvas;
         context:CanvasRenderingContext2D;
         itemList;
-        private selectedTags = [];
+        selectedTags = [];
         dataimg: string;
-        tag;
-        position;
-        addingTime;
-        description;
+        tag: string;
+        position: {};
+        addingTime: number;
+        description: string;
+        chosenTags: string[] = [];
+        tags: string[] = [];
+        currTag = '';
+        filteredList = [];
 
         constructor(private sanitizer:DomSanitizationService,
                     private addItemService: AddItemService){}
 
-        ngOnInit() { 
-                
-                this.itemList = this.addItemService.items;
-                console.log(this.itemList);
+        ngOnInit() {
                 setTimeout(() => {}, 2000);
                 const navi = <any>navigator;
                 
@@ -66,6 +76,9 @@ export class AddItemComponent implements OnInit {
 
                 let video =this.myVideo.nativeElement;                
                 this.video = video;
+                this.addItemService.queryTags().then(res => {
+                        this.tags = res;
+                });
         }
 
         findPosition(navi) {
@@ -99,4 +112,26 @@ export class AddItemComponent implements OnInit {
                                                 addingTime: this.addingTime,
                                                 description: this.description});
         }
+
+        filter() {
+                if (this.currTag !== ""){
+                        this.filteredList = this.tags.filter(function(el){
+                                return el.toLowerCase().indexOf(this.currTag.toLowerCase()) > -1;
+                        }.bind(this));
+                }else{
+                        this.filteredList = [];
+                }
+        }
+
+        selectTag(item){
+                this.currTag='';
+                this.filteredList = [];
+                this.chosenTags.push(item);
+                this.tags.splice(this.tags.indexOf(item), 1);
+        }
+
+        removeElement(item){
+            this.chosenTags.splice(this.chosenTags.indexOf(item), 1);
+        }
+
 }

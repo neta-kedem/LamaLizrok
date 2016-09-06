@@ -24,7 +24,7 @@ export class ItemModel {
 @Injectable()
 export class AddItemService {
 
-        items = ['table', 'chair', 'sofa'];
+        tags = ['table', 'chair', 'sofa'];
 
         private baseUrl = 'http://localhost:3003/data/items';
         constructor(private http: Http) {}
@@ -110,4 +110,21 @@ export class AddItemService {
         public get url() {
                 return this.baseUrl;
         }
+
+    queryTags(): Promise<string[]> {
+        let prmItem = this.http.get('http://localhost:3003/data/tags')
+            .toPromise()
+            .then(res => {
+                const jsonItems = res.json();
+                return jsonItems.map((jsonItem : any) => {
+                    return jsonItem.tag;
+                });
+            });
+
+        prmItem.catch(err => {
+            console.log('HomeService::query - Problem talking to server');
+        });
+
+        return prmItem;
+    }
 }
