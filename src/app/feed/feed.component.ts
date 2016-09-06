@@ -1,16 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import {FeedService, ItemModel} from './feed.service';
+import {FeedService} from './feed.service';
+import {ItemModel} from '../add-item/add-item.service';
+
       
 @Component({
 	// moduleId: module.id,
 	// selector: 'selector',
 	  styles: ['feed.scss'],
-	template: `<h1>I am a feed</h1>
+	template: `
 				<div class="itemContainer" *ngFor="let item of items">
-					<h1>{{item.tag}}</h1>
-                  <a routerLink="/items/{{item.id}}" class="btn btn-success">Location</a>
-					<h4>{{item.description}}</h4>
-					<h3>{{item.addingTime | date: 'medium'}}</h3> 	 	
+				<div class="tags-container">
+                    <div class="tags">
+                        <h4 *ngFor="let tag of item.tags">{{tag}}</h4>
+                    </div>
+                </div> 
+                <h7>{{item.addingTime | date: 'short'}}</h7> 	 	
+                  <a routerLink="/items/{{item.id}}">Location</a>
+					<h5>{{item.description}}</h5>
 					<img [src]="item.photo" alt="">
 							
 				</div>`
