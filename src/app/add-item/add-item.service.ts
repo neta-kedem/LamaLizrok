@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
+
+export class PositionModel{
+    public longitude: number;
+    public latitude: number;
+}
 export class ItemModel {
 /*
     constructor(
@@ -14,8 +19,8 @@ export class ItemModel {
     constructor(
         public id: string,
         public photo: string,
-        public tags: string[],
-        public position: {},
+        public tags: {}[],
+        public position: PositionModel,
         public addingTime: number,
         public description: string
     ){}

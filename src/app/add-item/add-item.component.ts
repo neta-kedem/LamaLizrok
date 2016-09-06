@@ -109,6 +109,7 @@ export class AddItemComponent implements OnInit {
                                                 position: this.position,
                                                 addingTime: this.addingTime,
                                                 description: this.description});
+
         }
 
         filter() {

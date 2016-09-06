@@ -7,7 +7,6 @@ import * as io from 'socket.io-client';
 
 
 export class ItemModel {
-
     constructor(
         public id: string,
         public photo: string,
@@ -16,7 +15,6 @@ export class ItemModel {
         public addingTime: number,
         public description: string
     ){}
-
 }
 
 @Injectable()

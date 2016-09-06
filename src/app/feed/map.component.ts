@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
             const prmKid = this.feedService.get(id);
             prmKid.then((item: ItemModel) => {
                 this.item = item;
-                console.log('this.item.position', this.item.position)
+                console.log('this.item.position', this.item.position);
                this.lat = this.item.position.latitude;
                 this.lng = this.item.position.longitude;
                 // console.log('this.item',this.item)
