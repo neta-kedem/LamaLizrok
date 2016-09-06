@@ -12,6 +12,7 @@ export class ItemModel {
         public addingTime: number
     ){}*/
     constructor(
+        public id: string,
         public photo: string,
         public tag: string,
         public position: {},
@@ -38,7 +39,7 @@ export class AddItemService {
                             const jsonItems = res.json();
                             return jsonItems.map((jsonItem : any) => {
                                     console.log('query service', jsonItem);
-                                    return new ItemModel(jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
+                                    return new ItemModel(jsonItem.id, jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
                             });
                     });
 
@@ -56,7 +57,7 @@ export class AddItemService {
                     .then(res => {
                             const jsonItem = res.json();
                             let jsonItemContacts = JSON.parse(jsonItem.contacts);
-                            return new ItemModel(jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
+                            return new ItemModel(jsonItem.id, jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
                     });
 
                 prmItem.catch(err => {
@@ -98,7 +99,7 @@ export class AddItemService {
                     .then((res : any) => {
                             const jsonItem = JSON.parse(res._body);
                             console.log('jsonItem',jsonItem);
-                            return new ItemModel(jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
+                            return new ItemModel(jsonItem.id, jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);
                     });
 
                 prmItem.catch(err => {

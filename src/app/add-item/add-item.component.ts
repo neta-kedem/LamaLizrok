@@ -7,7 +7,7 @@ import {AddItemService} from './add-item.service';
 @Component({
     // moduleId: module.id,
     selector: 'add-item',
-    styles: ['app.component.scss'],
+    styleUrls: ['add-item.component.css'],
     template: `<section class="add_item_component">
                         <h1>Add item</h1>
                         <div class="video_box">
@@ -20,17 +20,19 @@ import {AddItemService} from './add-item.service';
                         <!--<div class="container" >-->
                             <!--<div class="input-field col s12">-->
                               <label for="tagsList">Choose Tags:</label>
-                              <input id="tagsList" type="text" class="validate filter-input" [(ngModel)]=currTag (keyup)=filter()>
+                              <input class="dropbtn" id="tagsList" type="text" class="validate filter-input" [(ngModel)]=currTag (keyup)=filter()>
                             <!--</div>-->
-                            <div class="suggestions" *ngIf="filteredList.length > 0">
-                                <ul *ngFor=" let itemList of filteredList" >
-                                    <li >
-                                        <a (click)="selectTag(itemList)">{{itemList}}</a>
-                                    </li>
-                                </ul>
+                            <div *ngIf="filteredList.length > 0">
+                                <div class="dropdown-content">
+                                <div class="dropdown-item" *ngFor="let itemList of filteredList" (click)="selectTag(itemList)">{{itemList}} </div>
+                                <!--<ul *ngFor=" let itemList of filteredList" >-->
+                                    <!--<li >-->
+                                        <!--<a (click)="selectTag(itemList)">{{itemList}}</a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
                             </div>
-                        <!--</div>-->
-                        <div><span *ngFor="let country of chosenTags" (click)="removeElement(country)">{{country}} </span></div>
+                        </div>
+                        <div id="textarea" ><button *ngFor="let country of chosenTags" (click)="removeElement(country)">{{country}} <small>x</small></button></div>
                         
                         <textarea name="description" id="description" ngDefaultControl [(ngModel)]="description" cols="30" rows="10"></textarea>
                         <button (click)="save()">Save</button>
@@ -100,10 +102,6 @@ export class AddItemComponent implements OnInit {
                 const navi = <any>navigator;
                 this.findPosition(navi);
         }
-        addTag(tag) {
-                this.selectedTags.push(tag);
-
-        }
 
         save () {
                 this.addItemService.save({      photo:this.dataimg,
@@ -132,6 +130,7 @@ export class AddItemComponent implements OnInit {
 
         removeElement(item){
             this.chosenTags.splice(this.chosenTags.indexOf(item), 1);
+            this.tags.push(item);
         }
 
 }
