@@ -16,14 +16,6 @@ import { FeedComponent } from './feed/feed.component';
 
 import { AddItemService } from './add-item/add-item.service';
 import { FeedService } from './feed/feed.service';
-<<<<<<< HEAD
-=======
-
->>>>>>> 8bdabf29792874558e016478c1311c32e7690e51
-
-
-
-
 
 
 @NgModule({

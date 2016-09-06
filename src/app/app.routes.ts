@@ -5,13 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginPageComponent } from './login/login.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { FeedComponent } from './feed/feed.component';
-<<<<<<< HEAD
-=======
 import { MapComponent } from './feed/map.component';
->>>>>>> 8bdabf29792874558e016478c1311c32e7690e51
-
-
-
 
 const routes: Routes = [
   {path: '',  redirectTo: 'home', pathMatch: 'full'},
