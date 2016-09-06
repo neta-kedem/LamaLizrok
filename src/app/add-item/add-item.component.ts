@@ -104,8 +104,8 @@ export class AddItemComponent implements OnInit {
         }
 
         save () {
-                this.addItemService.save({      photo:this.dataimg,
-                                                tags:this.tag,
+                this.addItemService.save({      photo: this.dataimg,
+                                                tags: this.chosenTags,
                                                 position: this.position,
                                                 addingTime: this.addingTime,
                                                 description: this.description});

@@ -14,7 +14,7 @@ export class ItemModel {
     constructor(
         public id: string,
         public photo: string,
-        public tag: string,
+        public tags: string[],
         public position: {},
         public addingTime: number,
         public description: string
