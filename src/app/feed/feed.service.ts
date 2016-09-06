@@ -1,23 +1,24 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import {ItemModel} from '../add-item/add-item.service';
 import {Observable, Subject} from 'rxjs/Rx';
 
 import * as io from 'socket.io-client';
 
 
-export class ItemModel {
-
-    constructor(
-        public id: string,
-        public photo: string,
-        public tag: string,
-        public position: {},
-        public addingTime: number,
-        public description: string
-    ){}
-
-}
+// export class ItemModel {
+//
+//     constructor(
+//         public id: string,
+//         public photo: string,
+//         public tag: string,
+//         public position: {},
+//         public addingTime: number,
+//         public description: string
+//     ){}
+//
+// }
 
 @Injectable()
 export class FeedService {

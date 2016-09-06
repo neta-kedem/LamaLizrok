@@ -3,7 +3,9 @@
  */
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FeedService, ItemModel} from './feed.service';
+import {FeedService} from './feed.service';
+import {ItemModel} from '../add-item/add-item.service';
+
 
 
 
@@ -39,3 +41,4 @@ export class MapComponent implements OnInit {
     }
     
 }
+
