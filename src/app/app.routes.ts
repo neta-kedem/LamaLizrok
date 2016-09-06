@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginPageComponent } from './login/login.component';
 import { AddItemComponent } from './add-item/add-item.component';
-import { FeedComponent } from './items-feed/feed.component';
+import { FeedComponent } from './feed/feed.component';
 
 
 

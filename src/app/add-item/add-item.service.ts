@@ -97,6 +97,7 @@ export class AddItemService {
                 prmItem = response
                     .toPromise()
                     .then((res : any) => {
+                            console.log('res', res);
                             const jsonItem = JSON.parse(res._body);
                             console.log('jsonItem',jsonItem);
                             return new ItemModel(jsonItem.id, jsonItem.photo, jsonItem.tags, jsonItem.position, jsonItem.addingTime, jsonItem.description);

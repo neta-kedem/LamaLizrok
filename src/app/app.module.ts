@@ -9,11 +9,11 @@ import { AppComponent }  from './app.component';
 import { HomeComponent }  from './home/home.component';
 import { LoginPageComponent } from './login/login.component';
 import { AddItemComponent } from './add-item/add-item.component';
-import { FeedComponent } from './items-feed/feed.component';
+import { FeedComponent } from './feed/feed.component';
 
 
 import { AddItemService } from './add-item/add-item.service';
-import { FeedService } from './items-feed/feed.service';
+import { FeedService } from './feed/feed.service';
 
 
 
