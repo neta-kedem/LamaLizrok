@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import {Location} from '@angular/common';
 import {DomSanitizationService} from '@angular/platform-browser';
 import {AddItemService} from './add-item.service';
+import { Router } from '@angular/router';
+
 
 @Component({
     // moduleId: module.id,
@@ -60,7 +61,8 @@ export class AddItemComponent implements OnInit {
         filteredList = [];
 
         constructor(private sanitizer:DomSanitizationService,
-                    private addItemService: AddItemService){}
+                    private addItemService: AddItemService,
+                    private router:Router){}
 
         ngOnInit() {
                 setTimeout(() => {}, 2000);
@@ -104,11 +106,15 @@ export class AddItemComponent implements OnInit {
         }
 
         save () {
-                this.addItemService.save({      photo: this.dataimg,
+            this.addItemService.save({      photo: this.dataimg,
                                                 tags: this.chosenTags,
                                                 position: this.position,
                                                 addingTime: this.addingTime,
-                                                description: this.description});
+                                                description: this.description})
+                .then(() => {
+                    this.router.navigate(['/items']);
+            });
+
         }
 
         filter() {

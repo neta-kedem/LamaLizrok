@@ -33,7 +33,7 @@ export class FeedComponent implements OnInit {
 	constructor (private feedService: FeedService) { }
 
 	ngOnInit() {
-	console.log(this.items)
+	console.log(this.items);
     const prmItems = this.feedService.query();
 
     prmItems.then((items : ItemModel[]) => {
