@@ -56,7 +56,7 @@ export class FeedService {
             .toPromise()
             .then(res => {
                 const jsonItem = res.json();
-                console.log(jsonItem)
+                console.log(jsonItem);
                 return new ItemModel(jsonItem._id, jsonItem.body.photo, jsonItem.body.tags, jsonItem.body.position, jsonItem.body.addingTime, jsonItem.body.description);
             });
 
