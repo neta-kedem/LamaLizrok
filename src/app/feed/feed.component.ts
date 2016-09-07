@@ -9,6 +9,7 @@ import {ItemModel} from '../add-item/add-item.service';
 	  styles: ['feed.scss'],
 	template: `
                 <section class="feed-container">
+                    <h1>NEWS FEED</h1>
                     <div class="itemContainer" *ngFor="let item of items">
                     <div class="tags-container">
                         <div class="tags">

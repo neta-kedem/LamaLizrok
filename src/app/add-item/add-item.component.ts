@@ -10,21 +10,37 @@ import { Router } from '@angular/router';
     selector: 'add-item',
     styleUrls: ['add-item.component.css'],
     template: `<section class="add_item_component">
-                        <h1>Add item</h1>
+                    <h1>ADD ITEM</h1>
+                    <form action="">
+                    <div class="add_item_container">
+
+                    <div class="form-group">
                         <div class="video_box">
-                                <video #myVideo [src]="videosrc"></video>
-                                <div class="video_overlays">   
-                                        <button (click)="takePicture()"></button>
-                                </div>
+                            <video #myVideo [src]="videosrc"></video>
+                            <div class="video_overlays">   
+                                <button (click)="takePicture()"></button>
+                            </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+
                         <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
+                    </div>
+
                         <!--<div class="container" >-->
                             <!--<div class="input-field col s12">-->
-                              <label for="tagsList">Choose Tags:</label>
-                              <input class="dropbtn" id="tagsList" type="text" class="validate filter-input" [(ngModel)]=currTag (keyup)=filter()>
+                    <div class="form-group">
+
+                        <div class="tags_list_component">
+                            <label for="tagsList">Choose Tags:</label>
+                            <input class="dropbtn" id="tagsList" type="text" class="validate filter-input" [(ngModel)]=currTag (keyup)=filter()>
+                        </div> 
+                    </div>
+
+                    <div class="form-group">
                             <!--</div>-->
-                            <div *ngIf="filteredList.length > 0">
-                                <div class="dropdown-content">
+                        <div *ngIf="filteredList.length > 0">
+                            <div class="dropdown-content">
                                 <div class="dropdown-item" *ngFor="let itemList of filteredList" (click)="selectTag(itemList)">{{itemList}} </div>
                                 <!--<ul *ngFor=" let itemList of filteredList" >-->
                                     <!--<li >-->
@@ -33,10 +49,19 @@ import { Router } from '@angular/router';
                                 <!--</ul>-->
                             </div>
                         </div>
-                        <div id="textarea" ><button *ngFor="let country of chosenTags" (click)="removeElement(country)">{{country}} <small>x</small></button></div>
-                        
-                        <textarea name="description" id="description" ngDefaultControl [(ngModel)]="description" cols="30" rows="10"></textarea>
+                    </div>
+    
+                        <div id="textarea" ><button *ngFor="let country of chosenTags" (click)="removeElement(country)">{{country}} <small>x</small></button></div>                       
+                    <div class="form-group">
+                        <div class="descriptionContainer">
+                            <label for="tagsList">Description:</label>
+                            <textarea name="description" id="description" ngDefaultControl [(ngModel)]="description" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+
                         <button (click)="save()">Save</button>
+                    </div>
+                    </form>
                 </section>
                  `
 })

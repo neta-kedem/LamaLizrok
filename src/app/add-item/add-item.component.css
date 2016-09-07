@@ -7,8 +7,10 @@
   height: 28px;
   overflow: auto;
   padding: 2px;
+  margin: 2%;
   resize: both;
-  width: 400px;
+  width: 500px;
+    /*background-color: #3b5998;*/
 }
 
 .dropbtn {
