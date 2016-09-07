@@ -8,18 +8,24 @@ import {ItemModel} from '../add-item/add-item.service';
 	// selector: 'selector',
 	  styles: ['feed.scss'],
 	template: `
-				<div class="itemContainer" *ngFor="let item of items">
-				<div class="tags-container">
-                    <div class="tags">
-                        <h4 *ngFor="let tag of item.tags">{{tag}}</h4>
+                <section class="feed-container">
+                    <div class="itemContainer" *ngFor="let item of items">
+                    <div class="tags-container">
+                        <div class="tags">
+                            <h4 *ngFor="let tag of item.tags">{{tag}}</h4>
+                        </div>
+                    </div> 
+                    <h7>{{item.addingTime | date: 'short'}}</h7> 
+                    	<br>  
+                      <a routerLink="/items/{{item.id}}">
+                            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                            <h7>Location</h7>
+                        </a>
+                        <h5 class="description">{{item.description}}</h5>
+                        <img [src]="item.photo" alt="">
+                                
                     </div>
-                </div> 
-                <h7>{{item.addingTime | date: 'short'}}</h7> 	 	
-                  <a routerLink="/items/{{item.id}}">Location</a>
-					<h5>{{item.description}}</h5>
-					<img [src]="item.photo" alt="">
-							
-				</div>`
+                </section>`
 
 })
 export class FeedComponent implements OnInit {
