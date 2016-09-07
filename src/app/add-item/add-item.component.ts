@@ -11,33 +11,27 @@ import { Router } from '@angular/router';
     styleUrls: ['add-item.component.css'],
     template: `<section class="add_item_component">
                     <h1>ADD ITEM</h1>
-                    <form action="">
                     <div class="add_item_container">
 
-                    <div class="form-group">
+            
                         <div class="video_box">
                             <video #myVideo [src]="videosrc"></video>
                             <div class="video_overlays">   
                                 <button (click)="takePicture()"></button>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+          
 
                         <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
-                    </div>
 
                         <!--<div class="container" >-->
                             <!--<div class="input-field col s12">-->
-                    <div class="form-group">
 
                         <div class="tags_list_component">
                             <label for="tagsList">Choose Tags:</label>
                             <input class="dropbtn" id="tagsList" type="text" class="validate filter-input" [(ngModel)]=currTag (keyup)=filter()>
                         </div> 
-                    </div>
 
-                    <div class="form-group">
                             <!--</div>-->
                         <div *ngIf="filteredList.length > 0">
                             <div class="dropdown-content">
@@ -60,8 +54,7 @@ import { Router } from '@angular/router';
                     </div>
 
                         <button (click)="save()">Save</button>
-                    </div>
-                    </form>
+                   
                 </section>
                  `
 })
