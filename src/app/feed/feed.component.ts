@@ -23,7 +23,7 @@ import {ItemModel} from '../add-item/add-item.service';
                             <h7>Location</h7>
                         </a>
                         <h5 class="description">{{item.description}}</h5>
-                        <img [src]="item.photo" alt="">
+                        <img *ngFor="let photo of item.photos" [src]="photo" alt="">
                                 
                     </div>
                 </section>`

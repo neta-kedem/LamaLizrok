@@ -37,13 +37,18 @@ const baseUrl = serverRoot + 'data';
 
 app.use(express.static('uploads'));
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(clientSessions({
   cookieName: 'session',
   secret: 'C0d1ng 1s fun 1f y0u kn0w h0w', // set this to a long random string!
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
 }));
+
+//trying to upload many photos
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 
 const http 	= require('http').Server(app);
 
@@ -69,10 +74,10 @@ function dbConnect() {
 
 // GETs a list
 app.get('/data/:objType', function (req, res) {
-	cl('ENTERING GET')	
+	cl('ENTERING GET');
 	const objType = req.params.objType;
 	dbConnect().then((db) => {
-		cl('objType', objType)		
+		cl('objType', objType);
 		const collection = db.collection(objType);
 		console.log('objType', objType);		
 		

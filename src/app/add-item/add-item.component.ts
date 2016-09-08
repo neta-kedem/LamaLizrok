@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
                             </div>
                         </div>
           
-
+                        <img *ngFor="let photo of photos" [src]="photo" alt="">
                         <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
 
                         <!--<div class="container" >-->
@@ -53,108 +53,110 @@ import { Router } from '@angular/router';
                         </div>
                     </div>
 
-                        <button (click)="save()">Save</button>
+                        <button (click)="save()" [disabled]="!photos.length && !chosenTags.length">Save</button>
                    
                 </section>
-                 `
+             `
 })
 export class AddItemComponent implements OnInit {
 
-        videosrc: any;
-        @ViewChild("myCanvas") myCanvas;
-        @ViewChild("myVideo") myVideo;
-        video: any;        
-        canvas;
-        context:CanvasRenderingContext2D;
-        itemList;
-        selectedTags = [];
-        dataimg: string;
-        tag: string;
-        position: {};
-        addingTime: number;
-        description: string;
-        chosenTags: string[] = [];
-        tags: string[] = [];
-        currTag = '';
-        filteredList = [];
+    videosrc: any;
+    @ViewChild("myCanvas") myCanvas;
+    @ViewChild("myVideo") myVideo;
+    video: any;
+    canvas;
+    context:CanvasRenderingContext2D;
+    // itemList;
+    // selectedTags = [];
+    tag: string;
+    position: {};
+    addingTime: number;
+    description: string;
+    chosenTags: string[] = [];
+    tags: string[] = [];
+    currTag = '';
+    filteredList = [];
+    photos: string[]=[];
 
-        constructor(private sanitizer:DomSanitizationService,
-                    private addItemService: AddItemService,
-                    private router:Router){}
+    constructor(private sanitizer:DomSanitizationService,
+                private addItemService: AddItemService,
+                private router:Router){}
 
-        ngOnInit() {
-                setTimeout(() => {}, 2000);
-                const navi = <any>navigator;
-                
-                // navi.mediaDevices.getUserMedia = navi.mediaDevices.getUserMedia || navi.mediaDevices.mozGetUserMedia || navi.mediaDevices.webkitGetUserMedia;                
-                navi.getUserMedia = navi.getUserMedia || navi.mozGetUserMedia || navi.webkitGetUserMedia;
-                navi.getUserMedia({video: true},(stream) => {
-                    let videosrc = URL.createObjectURL(stream);
-                    this.videosrc = this.sanitizer.bypassSecurityTrustUrl(videosrc);
-                }, (err) => console.log(err));
+    ngOnInit() {
+        setTimeout(() => {}, 2000);
+        const navi = <any>navigator;
 
-                this.canvas = this.myCanvas.nativeElement;
-                this.context = this.canvas.getContext("2d");
+        // navi.mediaDevices.getUserMedia = navi.mediaDevices.getUserMedia || navi.mediaDevices.mozGetUserMedia || navi.mediaDevices.webkitGetUserMedia;
+        navi.getUserMedia = navi.getUserMedia || navi.mozGetUserMedia || navi.webkitGetUserMedia;
+        navi.getUserMedia({video: true},(stream) => {
+            let videosrc = URL.createObjectURL(stream);
+            this.videosrc = this.sanitizer.bypassSecurityTrustUrl(videosrc);
+        }, (err) => console.log(err));
 
-                let video =this.myVideo.nativeElement;                
-                this.video = video;
-                this.addItemService.queryTags().then(res => {
-                        this.tags = res;
-                });
-        }
+        this.canvas = this.myCanvas.nativeElement;
+        this.context = this.canvas.getContext("2d");
 
-        findPosition(navi) {
-                if (navi.geolocation) {
-                        console.log('ENTERING getLocation');
-                        navi.geolocation.getCurrentPosition((pos)=>{
-                                this.position = {longitude:pos.coords.longitude, latitude:pos.coords.latitude};
-                                this.addingTime = pos.timestamp;
-                        });
-                } else {
-                        console.log('NOT');
-                }
-        }
+        let video =this.myVideo.nativeElement;
+        this.video = video;
+        this.addItemService.queryTags().then(res => {
+            this.tags = res;
+        });
+    }
 
-        takePicture () {                 
-                this.context.drawImage(this.video, 0, 0, 320, 240);
-                this.context.drawImage(this.video, 0, 0, 640, 480);
-                this.dataimg = this.canvas.toDataURL("image/png");
-                const navi = <any>navigator;
-                this.findPosition(navi);
-        }
-
-        save () {
-            this.addItemService.save({      photo: this.dataimg,
-                                                tags: this.chosenTags,
-                                                position: this.position,
-                                                addingTime: this.addingTime,
-                                                description: this.description})
-                .then(() => {
-                    this.router.navigate(['/items']);
+    findPosition(navi) {
+        if (navi.geolocation) {
+            console.log('ENTERING getLocation');
+            navi.geolocation.getCurrentPosition((pos)=>{
+                this.position = {longitude:pos.coords.longitude, latitude:pos.coords.latitude};
+                this.addingTime = pos.timestamp;
             });
-
+        } else {
+            console.log('NOT');
         }
+    }
 
-        filter() {
-                if (this.currTag !== ""){
-                        this.filteredList = this.tags.filter(function(el){
-                                return el.toLowerCase().indexOf(this.currTag.toLowerCase()) > -1;
-                        }.bind(this));
-                }else{
-                        this.filteredList = [];
-                }
-        }
+    takePicture () {
+        this.context.drawImage(this.video, 0, 0, 320, 240);
+        this.context.drawImage(this.video, 0, 0, 640, 480);
+        this.photos.push(this.canvas.toDataURL("image/png"));
+        const navi = <any>navigator;
+        this.findPosition(navi);
+    }
 
-        selectTag(item){
-                this.currTag='';
-                this.filteredList = [];
-                this.chosenTags.push(item);
-                this.tags.splice(this.tags.indexOf(item), 1);
-        }
+    save () {
+        this.addItemService.save({
+                                // photo: this.dataimg,
+                                photos: this.photos,
+                                tags: this.chosenTags,
+                                position: this.position,
+                                addingTime: this.addingTime,
+                                description: this.description})
+            .then(() => {
+                this.router.navigate(['/items']);
+        });
 
-        removeElement(item){
-            this.chosenTags.splice(this.chosenTags.indexOf(item), 1);
-            this.tags.push(item);
+    }
+
+    filter() {
+        if (this.currTag !== ""){
+            this.filteredList = this.tags.filter(function(el){
+                return el.toLowerCase().indexOf(this.currTag.toLowerCase()) > -1;
+            }.bind(this));
+        }else{
+            this.filteredList = [];
         }
+    }
+
+    selectTag(item){
+        this.currTag='';
+        this.filteredList = [];
+        this.chosenTags.push(item);
+        this.tags.splice(this.tags.indexOf(item), 1);
+    }
+
+    removeElement(item){
+        this.chosenTags.splice(this.chosenTags.indexOf(item), 1);
+        this.tags.push(item);
+    }
 
 }

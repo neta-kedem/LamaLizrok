@@ -40,7 +40,7 @@ export class FeedService {
                 const jsonItems = res.json();
                 return jsonItems.map((jsonItem : any) => {
                     console.log('query service', jsonItem);
-                    return new ItemModel(jsonItem._id, jsonItem.body.photo, jsonItem.body.tags, jsonItem.body.position, jsonItem.body.addingTime, jsonItem.body.description);
+                    return new ItemModel(jsonItem._id, jsonItem.body.photos, jsonItem.body.tags, jsonItem.body.position, jsonItem.body.addingTime, jsonItem.body.description);
                 });
             });
 
@@ -57,7 +57,7 @@ export class FeedService {
             .then(res => {
                 const jsonItem = res.json();
                 console.log(jsonItem);
-                return new ItemModel(jsonItem._id, jsonItem.body.photo, jsonItem.body.tags, jsonItem.body.position, jsonItem.body.addingTime, jsonItem.body.description);
+                return new ItemModel(jsonItem._id, jsonItem.body.photos, jsonItem.body.tags, jsonItem.body.position, jsonItem.body.addingTime, jsonItem.body.description);
             });
 
         prmItem.catch(err => {
