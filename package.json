@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Angular2 Webpack Starter Project",
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0 --inline --colors --progress --display-error-details --display-cached --port 3000 --content-base src",
+    "start": "webpack-dev-server --host 0.0.0.0 --hot --https --colors --progress --display-error-details --display-cached --port 3001 --content-base src",
     "build": "webpack",
     "postinstall": "typings install"
   },
