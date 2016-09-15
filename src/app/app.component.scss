@@ -1,14 +1,18 @@
 @import "add-item/add-item.scss";
+@import "add-item-2/add-item-camera";
+@import "add-item-2/add-item-desc";
 @import "feed/feed.scss";
+@import "home/home.scss";
 
 $badass: #bada55;
 
 body {
   background-color: #e9ebee;
+  overflow-y: visible;
 }
 
-.container {
-  margin-top: 50px;
+.container_section {
+  margin-top: 5%;
 }
 
 input.ng-invalid.ng-touched {

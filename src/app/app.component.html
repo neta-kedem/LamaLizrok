@@ -1,21 +1,68 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <span class="navbar-brand">
-        <a routerLink="/home" routerActive="active">Home</a>
-    </span>
-    <ul class="nav navbar-nav">
-      <li><a routerLink="login" routerActive="active">login</a></li>
-      <li><a routerLink="add" routerActive="active">Add Item</a></li>     
-      <li><a routerLink="items" routerActive="active">Feed</a></li>
-       
-    </ul>
-  </div>
-</nav>
+<!--<nav class="navbar navbar-default navbar-fixed-top">-->
+  <!--&lt;!&ndash;<div class="container-fluid">&ndash;&gt;-->
+    <!--<span class="navbar-brand">-->
+        <!--<a routerLink="/home" routerActive="active">Home</a>-->
+    <!--</span>-->
+    <!--<ul class="nav navbar-nav">-->
+      <!--<li><a routerLink="login" routerActive="active">login</a></li>-->
+      <!--<li><a routerLink="add" routerActive="active">Add Item</a></li>-->
+      <!--<li><a routerLink="items" routerActive="active">Feed</a></li>-->
+    <!--</ul>-->
+    <!--<ul class="nav navbar-nav navbar-right">-->
+      <!--<li>-->
+        <!--<select #langSelect (change)="translate.use(langSelect.value)">-->
+          <!--<option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>-->
+        <!--</select>-->
+      <!--</li>-->
+    <!--</ul>-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</nav>-->
 
-<section class="container">
+<div class="navbar-wrapper">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1"
+                aria-expanded="false" aria-controls="navbar"
+                (click)="isCollapsed = !isCollapsed">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <!--<a class="navbar-brand" href="#">Angular2 Workshop</a>-->
+        <span class="navbar-brand">
+          <a routerLink="/home" routerActive="active">Home</a>
+        </span>
+      </div>
+      <div id="navbar1" class="navbar-collapse collapse" [ngbCollapse]="isCollapsed">
+        <ul class="nav navbar-nav">
+          <li><a routerLink="login" routerActive="active">login</a></li>
+          <li><a routerLink="add" routerActive="active">Add Item</a></li>
+          <li><a routerLink="items" routerActive="active">Feed</a></li>
+          <li><a routerLink="add-camera" routerActive="active">camera</a></li>
+          <!--<li *ngFor="let lang of translate.getLangs()" (click)="lang === translate.currentLang">{{ lang }}</li>-->
+          <li>
+            <select #langSelect (change)="translate.use(langSelect.value)">
+              <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+            </select>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!--<appc-header></appc-header>-->
+
+<section class="container_section">
   <router-outlet></router-outlet>
   <router-outlet name="aux"></router-outlet>
 </section>
+
+<!--<div class="container">-->
+  <!--<appc-footer></appc-footer>-->
+<!--</div>-->
 
 <!--<div class="navbar navbar-fixed-bottom text-center">
   <a routerLink="/home" routerActive="active">Angular 2 Seed</a> by misterBIT 

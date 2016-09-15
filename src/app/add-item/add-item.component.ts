@@ -1,60 +1,48 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Location} from '@angular/common';
 import {DomSanitizationService} from '@angular/platform-browser';
 import {AddItemService} from './add-item.service';
 import { Router } from '@angular/router';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 
 
 @Component({
     // moduleId: module.id,
     selector: 'add-item',
-    styleUrls: ['add-item.component.css'],
-    template: `<section class="add_item_component">
-                    <h1>ADD ITEM</h1>
+    styleUrls: ['add-item.scss'],
+    template: `<section>
+                <div class="add_item_component">
+                  <h1>{{ 'ADDITEM.TITLE' | translate }}</h1>
                     <div class="add_item_container">
-
-            
                         <div class="video_box">
                             <video #myVideo [src]="videosrc"></video>
                             <div class="video_overlays">   
                                 <button (click)="takePicture()"></button>
                             </div>
                         </div>
-          
-                        <img *ngFor="let photo of photos" [src]="photo" alt="">
+                        <div class="img_container">
+                            <div *ngFor="let photo of photos"  class="img_container_content">
+                                <span (click)="removePicture(photo)" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <img [src]="photo" alt="">
+                            </div>    
+                        </div>
                         <canvas class="canvas" #myCanvas style="background:lightgray;"></canvas>
-
-                        <!--<div class="container" >-->
-                            <!--<div class="input-field col s12">-->
-
                         <div class="tags_list_component">
                             <label for="tagsList">Choose Tags:</label>
                             <input class="dropbtn" id="tagsList" type="text" class="validate filter-input" [(ngModel)]=currTag (keyup)=filter()>
                         </div> 
-
-                            <!--</div>-->
                         <div *ngIf="filteredList.length > 0">
                             <div class="dropdown-content">
                                 <div class="dropdown-item" *ngFor="let itemList of filteredList" (click)="selectTag(itemList)">{{itemList}} </div>
-                                <!--<ul *ngFor=" let itemList of filteredList" >-->
-                                    <!--<li >-->
-                                        <!--<a (click)="selectTag(itemList)">{{itemList}}</a>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
                             </div>
                         </div>
-                    </div>
-    
                         <div id="textarea" ><button *ngFor="let country of chosenTags" (click)="removeElement(country)">{{country}} <small>x</small></button></div>                       
-                    <div class="form-group">
                         <div class="descriptionContainer">
                             <label for="tagsList">Description:</label>
                             <textarea name="description" id="description" ngDefaultControl [(ngModel)]="description" cols="30" rows="10"></textarea>
                         </div>
-                    </div>
-
                         <button (click)="save()" [disabled]="!photos.length && !chosenTags.length">Save</button>
-                   
+                   </div>
+                </div>
                 </section>
              `
 })
@@ -80,7 +68,14 @@ export class AddItemComponent implements OnInit {
 
     constructor(private sanitizer:DomSanitizationService,
                 private addItemService: AddItemService,
-                private router:Router){}
+                private router:Router,
+                private translate: TranslateService){
+        translate.addLangs(["en", "heb"]);
+        translate.setDefaultLang('en');
+
+        let browserLang = translate.getBrowserLang();
+        translate.use(browserLang.match(/en|heb/) ? browserLang : 'en');
+    }
 
     ngOnInit() {
         setTimeout(() => {}, 2000);
@@ -116,11 +111,15 @@ export class AddItemComponent implements OnInit {
     }
 
     takePicture () {
-        this.context.drawImage(this.video, 0, 0, 320, 240);
+        // this.context.drawImage(this.video, 0, 0, 320, 240);
         this.context.drawImage(this.video, 0, 0, 640, 480);
         this.photos.push(this.canvas.toDataURL("image/png"));
         const navi = <any>navigator;
         this.findPosition(navi);
+    }
+
+    removePicture(pic) {
+        this.photos = this.photos.filter(photo => photo !== pic);
     }
 
     save () {
@@ -134,7 +133,6 @@ export class AddItemComponent implements OnInit {
             .then(() => {
                 this.router.navigate(['/items']);
         });
-
     }
 
     filter() {
